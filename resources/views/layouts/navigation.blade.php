@@ -12,9 +12,31 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+    
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @if(Auth::user()->role !== 'cafe_owner')
+                        <x-nav-link :href="route('maintenance.index')" :active="request()->routeIs('maintenance.*')">
+                            {{ __('Maintenance') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if(Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('visitors.index')" :active="request()->routeIs('visitors.*')">
+                            {{ __('Visitor Log') }}
+                        </x-nav-link>
+                    @endif
+
+                    <x-nav-link :href="route('deals.index')" :active="request()->routeIs('deals.*')">
+                        {{ __('Campus Deals') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('cafeteria.index')" :active="request()->routeIs('cafeteria.*')">
+                        {{ __('Cafeteria Menu') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 

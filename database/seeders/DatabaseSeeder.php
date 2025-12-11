@@ -38,7 +38,14 @@ class DatabaseSeeder extends Seeder
             'email' =>'visitor@campus.com',
             'role' => 'visitor',
             'password' => bcrypt('password'),
-        ]);     
+        ]);  
+        // Cafe Owner User
+        \App\Models\User::factory()->create([
+        'name' => 'Burger King Manager',
+        'email' => 'cafe@campus.com',
+        'role' => 'cafe_owner',
+        'password' => bcrypt('password'),
+        ]);   
     
         
     }
