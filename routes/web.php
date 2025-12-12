@@ -94,6 +94,23 @@ Route::get('/force-clear', function() {
     Artisan::call('config:clear');
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
-    return "Cache Cleared! Now try logging in.";
+    return "Cache Cleared! Now try logging in.";    
+    
+});
+
+
+Route::get('/run-migrations', function () {
+    // 1. Force clear cache first (to fix the 404 issues)
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+
+    // 2. Wipe database & create tables
+    Artisan::call('migrate:fresh --force');
+    
+    // 3. Add seed data (users)
+    Artisan::call('db:seed --force');
+    
+    return 'DONE! Database is migrated and seeded. You can now login.';
 });
 require __DIR__.'/auth.php';
