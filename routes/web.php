@@ -77,5 +77,11 @@ Route::get('/run-migrations', function () {
     
     return 'DONE! Database is migrated and seeded. You can now login.';
 });
+Route::get('/clear-cache', function() {
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:cache');
+    return "Cache Cleared!";
+});
 
 require __DIR__.'/auth.php';
