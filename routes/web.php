@@ -100,17 +100,15 @@ Route::get('/force-clear', function() {
 
 
 Route::get('/run-migrations', function () {
-    // 1. Force clear cache first (to fix the 404 issues)
-    Artisan::call('route:clear');
-    Artisan::call('config:clear');
-    Artisan::call('cache:clear');
-
-    // 2. Wipe database & create tables
+    // SKIP clearing cache (it causes errors if tables are missing)
+    
+    // 1. Create tables directly
     Artisan::call('migrate:fresh --force');
     
-    // 3. Add seed data (users)
+    // 2. Add test users
     Artisan::call('db:seed --force');
     
-    return 'DONE! Database is migrated and seeded. You can now login.';
+    return 'DONE! Database tables created successfully. You can login now.';
 });
+
 require __DIR__.'/auth.php';
