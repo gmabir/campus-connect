@@ -84,4 +84,10 @@ Route::get('/clear-cache', function() {
     return "Cache Cleared!";
 });
 
+Route::get('/reset-config', function() {
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    return 'Config Cleared! Now try logging in.';
+});
+
 require __DIR__.'/auth.php';
