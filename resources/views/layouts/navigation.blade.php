@@ -12,6 +12,7 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    
     
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
@@ -36,6 +37,10 @@
                     <x-nav-link :href="route('cafeteria.index')" :active="request()->routeIs('cafeteria.*')">
                         {{ __('Cafeteria Menu') }}
                     </x-nav-link>
+                    
+                    <x-nav-link :href="route('housing.index')" :active="request()->routeIs('housing.*')">
+                        {{ __('Student Housing') }} 
+                    </x-nav-link>    
 
                 </div>
             </div>

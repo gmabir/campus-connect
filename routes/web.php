@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\CafeteriaController;
-use App\Http\Controllers\DealController; // <--- ADDED THIS IMPORT
-
+use App\Http\Controllers\DealController; 
+use App\Http\Controllers\HousingController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes
@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/visitors', [VisitorController::class, 'index'])->name('visitors.index');
     Route::post('/visitors', [VisitorController::class, 'store'])->name('visitors.store');
     Route::patch('/visitors/{id}/checkout', [VisitorController::class, 'checkout'])->name('visitors.checkout');
+    //----6.Housing Management---
+    Route::resource('housing', HousingController::class);
 
 });
 
