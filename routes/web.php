@@ -90,4 +90,10 @@ Route::get('/reset-config', function() {
     return 'Config Cleared! Now try logging in.';
 });
 
+Route::get('/force-clear', function() {
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    return "Cache Cleared! Now try logging in.";
+});
 require __DIR__.'/auth.php';
