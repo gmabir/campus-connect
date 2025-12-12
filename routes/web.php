@@ -114,17 +114,27 @@ Route::get('/run-migrations', function () {
 });
 
 
-// 👇 RENAMED ROUTE TO "/fix-db"
 Route::get('/fix-db', function () {
-    // 1. Force a clean connection
+    // 1. Force Clean Connection
     DB::purge();
     DB::reconnect();
 
-    // 2. Wipe and Recreate tables
+    // 2. DESTROY GHOST TABLES (The Nuclear Option)
+    // We use "CASCADE" to delete linked data automatically
+    DB::statement('DROP TABLE IF EXISTS users CASCADE');
+    DB::statement('DROP TABLE IF EXISTS sessions CASCADE');
+    DB::statement('DROP TABLE IF EXISTS password_reset_tokens CASCADE');
+    DB::statement('DROP TABLE IF EXISTS cache CASCADE');
+    DB::statement('DROP TABLE IF EXISTS cache_locks CASCADE');
+    DB::statement('DROP TABLE IF EXISTS jobs CASCADE');
+    DB::statement('DROP TABLE IF EXISTS job_batches CASCADE');
+    DB::statement('DROP TABLE IF EXISTS failed_jobs CASCADE');
+
+    // 3. NOW run the migrations on the truly empty DB
     Artisan::call('migrate:fresh --force');
     Artisan::call('db:seed --force');
     
-    return 'DONE! Tables created. Go to /login';
+    return 'DONE! Ghost tables deleted and database rebuilt. Go to /login';
 });
 
 require __DIR__.'/auth.php';
