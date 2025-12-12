@@ -11,6 +11,7 @@ use App\Http\Controllers\LostItemController;
 use App\Http\Controllers\TransportRouteController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ResourceRequestController;
+use Illuminate\Support\Facades\Artisan;
 /*
 |--------------------------------------------------------------------------
 | Public Routes
@@ -65,6 +66,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('resources', ResourceRequestController::class);
     Route::patch('/resources/{id}/status', [ResourceRequestController::class, 'updateStatus'])->name('resources.updateStatus');
 
+});
+// TEMPORARY: Route to set up the database on Vercel
+Route::get('/run-migrations', function () {
+    // 1. Wipe the database clean and create new tables
+    Artisan::call('migrate:fresh --force');
+    
+    // 2. Add the test users (Admin, Student, etc.)
+    Artisan::call('db:seed --force');
+    
+    return 'DONE! Database is migrated and seeded. You can now login.';
 });
 
 require __DIR__.'/auth.php';
