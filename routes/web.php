@@ -12,6 +12,8 @@ use App\Http\Controllers\TransportRouteController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ResourceRequestController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 /*
 |--------------------------------------------------------------------------
 | Public Routes
@@ -109,6 +111,19 @@ Route::get('/run-migrations', function () {
     Artisan::call('db:seed --force');
     
     return 'DONE! Database tables created successfully. You can login now.';
+});
+
+
+Route::get('/run-migrations', function () {
+    // 1. Force a completely fresh connection (Fixes 'transaction aborted' error)
+    DB::purge();
+    DB::reconnect();
+
+    // 2. Wipe and Recreate
+    Artisan::call('migrate:fresh --force');
+    Artisan::call('db:seed --force');
+    
+    return 'DONE! Tables created. You can now login.';
 });
 
 require __DIR__.'/auth.php';
