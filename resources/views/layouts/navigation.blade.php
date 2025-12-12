@@ -37,10 +37,27 @@
                     <x-nav-link :href="route('cafeteria.index')" :active="request()->routeIs('cafeteria.*')">
                         {{ __('Cafeteria Menu') }}
                     </x-nav-link>
-                    
+
                     <x-nav-link :href="route('housing.index')" :active="request()->routeIs('housing.*')">
                         {{ __('Student Housing') }} 
-                    </x-nav-link>    
+                    </x-nav-link> 
+
+                    <x-nav-link :href="route('lost-found.index')" :active="request()->routeIs('lost-found.*')">
+                        {{ __('Lost & Found') }}
+                    </x-nav-link>  
+
+                    <x-nav-link :href="route('transport.index')" :active="request()->routeIs('transport.*')">
+                        {{ __('Transport') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('feedback.index')" :active="request()->routeIs('feedback.*')">
+                        {{ __('Feedback') }}
+                    </x-nav-link>
+                    @if(Auth::user()->role === 'admin' || Auth::user()->role === 'teacher')
+                        <x-nav-link :href="route('resources.index')" :active="request()->routeIs('resources.*')">
+                            {{ __('Resource Req') }}
+                        </x-nav-link>
+                    @endif
 
                 </div>
             </div>

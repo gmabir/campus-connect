@@ -7,6 +7,10 @@ use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\CafeteriaController;
 use App\Http\Controllers\DealController; 
 use App\Http\Controllers\HousingController;
+use App\Http\Controllers\LostItemController;
+use App\Http\Controllers\TransportRouteController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\ResourceRequestController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes
@@ -50,6 +54,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/visitors/{id}/checkout', [VisitorController::class, 'checkout'])->name('visitors.checkout');
     //----6.Housing Management---
     Route::resource('housing', HousingController::class);
+    //---7.Lost and Found Management---
+    Route::resource('lost-found', LostItemController::class);
+    Route::patch('/lost-found/{id}/found', [LostItemController::class, 'markAsFound'])->name('lost-found.markFound');
+    //---8.Transport Route Management---
+    Route::resource('transport', TransportRouteController::class);
+    //---9.Feedback Management---
+    Route::resource('feedback', FeedbackController::class);
+    //---10.Resource Request Management---
+    Route::resource('resources', ResourceRequestController::class);
+    Route::patch('/resources/{id}/status', [ResourceRequestController::class, 'updateStatus'])->name('resources.updateStatus');
 
 });
 

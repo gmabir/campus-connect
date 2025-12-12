@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('feedback', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable(); // Can be anonymous
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // The Student
+            $table->string('type'); // 'teacher', 'course', 'other'
+            $table->string('target_name')->nullable(); // Name of Teacher or Course
             $table->text('message');
-            $table->integer('rating')->nullable(); // 1 to 5
+            $table->integer('rating');
             $table->timestamps();
         });
     }
