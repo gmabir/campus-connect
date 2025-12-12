@@ -114,16 +114,17 @@ Route::get('/run-migrations', function () {
 });
 
 
-Route::get('/run-migrations', function () {
-    // 1. Force a completely fresh connection (Fixes 'transaction aborted' error)
+// 👇 RENAMED ROUTE TO "/fix-db"
+Route::get('/fix-db', function () {
+    // 1. Force a clean connection
     DB::purge();
     DB::reconnect();
 
-    // 2. Wipe and Recreate
+    // 2. Wipe and Recreate tables
     Artisan::call('migrate:fresh --force');
     Artisan::call('db:seed --force');
     
-    return 'DONE! Tables created. You can now login.';
+    return 'DONE! Tables created. Go to /login';
 });
 
 require __DIR__.'/auth.php';
