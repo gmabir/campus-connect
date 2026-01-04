@@ -14,6 +14,14 @@ use App\Http\Controllers\ResourceRequestController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\RepositoryController;
+use App\Http\Controllers\OfficeHourController;
+use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\ClubController;
+use App\Http\Controllers\PollController;
+use App\Http\Controllers\HealthAppointmentController;
+
 
 
 Route::get('/', function () {
@@ -57,6 +65,51 @@ Route::middleware('auth')->group(function () {
     //-------------------------Resource Request Management---------------
     Route::resource('resources', ResourceRequestController::class);
     Route::patch('/resources/{id}/status', [ResourceRequestController::class, 'updateStatus'])->name('resources.updateStatus');
+    // --- 11. CAMPUS EVENTS ---
+    Route::resource('events', EventController::class)->only(['index','create','store','destroy']);
+    Route::post('/events/{id}/register', [EventController::class, 'register'])->name('events.register');
+    Route::delete('/events/{id}/unregister', [EventController::class, 'unregister'])->name('events.unregister');
+    // ---12. THESIS / INTERNSHIP / PROJECT REPOSITORY ---
+    Route::resource('repository', RepositoryController::class)->only(['index','create','store','destroy']);
+    Route::get('/repository/{id}/download', [RepositoryController::class, 'download'])->name('repository.download');
+    // ---13. FACULTY OFFICE HOURS ---
+    Route::get('/office-hours', [OfficeHourController::class, 'index'])->name('office-hours.index');
+    Route::get('/office-hours/create', [OfficeHourController::class, 'create'])->name('office-hours.create');
+    Route::post('/office-hours', [OfficeHourController::class, 'store'])->name('office-hours.store');
+
+    Route::post('/office-hours/{id}/book', [OfficeHourController::class, 'book'])->name('office-hours.book');
+    Route::delete('/office-hours/{id}/cancel', [OfficeHourController::class, 'cancel'])->name('office-hours.cancel');
+
+    Route::get('/office-hours/{id}/bookings', [OfficeHourController::class, 'bookings'])->name('office-hours.bookings');
+    Route::delete('/office-hours/{office_hour}', [OfficeHourController::class, 'destroy'])->name('office-hours.destroy');
+    // --- CAMPUS NOTICES & ALERTS ---
+    Route::resource('notices', NoticeController::class)->only(['index','create','store','destroy']);
+    // --- STUDENT CLUBS & ACTIVITIES ---
+    Route::get('/clubs', [ClubController::class, 'index'])->name('clubs.index');
+    Route::get('/clubs/create', [ClubController::class, 'create'])->name('clubs.create');
+    Route::post('/clubs', [ClubController::class, 'store'])->name('clubs.store');
+
+    Route::post('/clubs/{id}/join', [ClubController::class, 'join'])->name('clubs.join');
+    Route::delete('/clubs/{id}/leave', [ClubController::class, 'leave'])->name('clubs.leave');
+
+    Route::get('/clubs/{id}/members', [ClubController::class, 'members'])->name('clubs.members');
+    // --- COMMUNITY POLLS & VOTING ---
+    Route::get('/polls', [PollController::class, 'index'])->name('polls.index');
+    Route::get('/polls/create', [PollController::class, 'create'])->name('polls.create');
+    Route::post('/polls', [PollController::class, 'store'])->name('polls.store');
+
+    Route::post('/polls/{id}/vote', [PollController::class, 'vote'])->name('polls.vote');
+
+    Route::patch('/polls/{id}/toggle', [PollController::class, 'toggle'])->name('polls.toggle');
+    Route::delete('/polls/{poll}', [PollController::class, 'destroy'])->name('polls.destroy');
+    // --- HEALTH & WELLNESS APPOINTMENTS ---
+    Route::get('/health', [HealthAppointmentController::class, 'index'])->name('health.index');
+    Route::get('/health/create', [HealthAppointmentController::class, 'create'])->name('health.create');
+    Route::post('/health', [HealthAppointmentController::class, 'store'])->name('health.store');
+
+    Route::patch('/health/{id}/status', [HealthAppointmentController::class, 'updateStatus'])->name('health.updateStatus');
+    Route::delete('/health/{health}', [HealthAppointmentController::class, 'destroy'])->name('health.destroy');
+
 
 });
 // TEMPORARY: Route to set up the database on Vercel

@@ -34,8 +34,29 @@
                         {{ __('Campus Deals') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('repository.index')" :active="request()->routeIs('repository.*')">
+                      {{ __('Repository') }}
+                    </x-nav-link>
+
+                    @if(\Illuminate\Support\Facades\Route::has('office-hours.index'))
+                      <x-nav-link :href="route('office-hours.index')" :active="request()->routeIs('office-hours.*')">
+                       {{ __('Office Hours') }}
+                      </x-nav-link>
+                    @endif
+
+                    @if(\Illuminate\Support\Facades\Route::has('notices.index'))
+                      <x-nav-link :href="route('notices.index')" :active="request()->routeIs('notices.*')">
+                        {{ __('Notices') }}
+                      </x-nav-link>
+                    @endif
+
+
                     <x-nav-link :href="route('cafeteria.index')" :active="request()->routeIs('cafeteria.*')">
                         {{ __('Cafeteria Menu') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.*')">
+                        {{ __('Events') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('housing.index')" :active="request()->routeIs('housing.*')">
@@ -53,11 +74,32 @@
                     <x-nav-link :href="route('feedback.index')" :active="request()->routeIs('feedback.*')">
                         {{ __('Feedback') }}
                     </x-nav-link>
-                    @if(Auth::user()->role === 'admin' || Auth::user()->role === 'teacher')
+
+                    @if(\Illuminate\Support\Facades\Route::has('resources.index'))
                         <x-nav-link :href="route('resources.index')" :active="request()->routeIs('resources.*')">
                             {{ __('Resource Req') }}
                         </x-nav-link>
                     @endif
+
+                    @if(\Illuminate\Support\Facades\Route::has('polls.index'))
+                        <x-nav-link :href="route('polls.index')" :active="request()->routeIs('polls.*')">
+                              {{ __('Polls') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if(\Illuminate\Support\Facades\Route::has('health.index'))
+                      <x-nav-link :href="route('health.index')" :active="request()->routeIs('health.*')">
+                         {{ __('Health') }}
+                      </x-nav-link>
+                    @endif
+                    
+                    @if(\Illuminate\Support\Facades\Route::has('gallery.index'))
+                      <x-nav-link :href="route('gallery.index')" :active="request()->routeIs('gallery.*')">
+                         {{ __('Gallery') }}
+                      </x-nav-link>
+                    @endif
+
+
 
                 </div>
             </div>
