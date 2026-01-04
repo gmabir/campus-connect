@@ -14,57 +14,47 @@ use App\Http\Controllers\ResourceRequestController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-/*
-|--------------------------------------------------------------------------
-| Public Routes
-|--------------------------------------------------------------------------
-*/
+
 
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-/*
-|--------------------------------------------------------------------------
-| Authenticated Routes (All features in one safe group)
-|--------------------------------------------------------------------------
-*/
 Route::middleware('auth')->group(function () {
     
-    // --- 1. PROFILE ---
+    // -----------------------PROFILE --------------------
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // --- 2. MAINTENANCE REQUESTS ---
+    // ----------------MAINTENANCE REQUESTS ------------
     Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance.index');
     Route::get('/maintenance/create', [MaintenanceController::class, 'create'])->name('maintenance.create');
     Route::post('/maintenance', [MaintenanceController::class, 'store'])->name('maintenance.store');
 
-    // --- 3. CAMPUS DEALS (This was missing!) ---
+    // ---------------------- CAMPUS DEALS -----------------------
     Route::resource('deals', DealController::class);
 
-    // --- 4. CAFETERIA MENU ---
+    // ------------------------CAFETERIA MENU ---------------------
     Route::resource('cafeteria', CafeteriaController::class);
 
-    // --- 5. VISITOR MANAGEMENT ---
+    // ------------------------VISITOR MANAGEMENT -------------------
     Route::get('/visitors', [VisitorController::class, 'index'])->name('visitors.index');
     Route::post('/visitors', [VisitorController::class, 'store'])->name('visitors.store');
     Route::patch('/visitors/{id}/checkout', [VisitorController::class, 'checkout'])->name('visitors.checkout');
-    //----6.Housing Management---
+    //----------------------------Housing Management------------------
     Route::resource('housing', HousingController::class);
-    //---7.Lost and Found Management---
+    //------------------------Lost and Found Management----------------
     Route::resource('lost-found', LostItemController::class);
     Route::patch('/lost-found/{id}/found', [LostItemController::class, 'markAsFound'])->name('lost-found.markFound');
-    //---8.Transport Route Management---
+    //-------------------------Transport Route Management-----------------
     Route::resource('transport', TransportRouteController::class);
-    //---9.Feedback Management---
+    //-------------------------Feedback Management-----------------------
     Route::resource('feedback', FeedbackController::class);
-    //---10.Resource Request Management---
+    //-------------------------Resource Request Management---------------
     Route::resource('resources', ResourceRequestController::class);
     Route::patch('/resources/{id}/status', [ResourceRequestController::class, 'updateStatus'])->name('resources.updateStatus');
 
