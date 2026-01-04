@@ -109,6 +109,10 @@ Route::middleware('auth')->group(function () {
 
     Route::patch('/health/{id}/status', [HealthAppointmentController::class, 'updateStatus'])->name('health.updateStatus');
     Route::delete('/health/{health}', [HealthAppointmentController::class, 'destroy'])->name('health.destroy');
+    
+
+    Route::resource('gallery', App\Http\Controllers\EventPhotoController::class)->only(['index','create','store','destroy']);
+
 
 
 });

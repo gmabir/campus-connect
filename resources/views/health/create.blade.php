@@ -1,39 +1,38 @@
 <x-app-layout>
-    <div class="max-w-3xl mx-auto p-6">
-        <h1 class="text-2xl font-bold mb-4">Request Appointment</h1>
+    <x-slot name="header">
+        <h2 class="font-bold text-xl text-gray-800 leading-tight">Book Health Appointment</h2>
+    </x-slot>
 
-        @if($errors->any())
-            <div class="mb-4 p-3 bg-red-100 text-red-800 rounded">
-                <ul class="list-disc ml-5">
-                    @foreach($errors->all() as $e)
-                        <li>{{ $e }}</li>
-                    @endforeach
-                </ul>
+    <div class="py-12">
+        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                <form action="{{ route('health.store') }}" method="POST">
+                    @csrf
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Select Date</label>
+                            <input type="date" name="appointment_date" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Select Time</label>
+                            <input type="time" name="appointment_time" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Reason for Visit</label>
+                        <textarea name="reason" rows="3" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" placeholder="Describe your symptoms..." required></textarea>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <button type="submit" class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">
+                            Confirm Appointment
+                        </button>
+                        <a href="{{ route('health.index') }}" class="text-gray-500 font-bold hover:underline">Cancel</a>
+                    </div>
+                </form>
             </div>
-        @endif
-
-        <form method="POST" action="{{ route('health.store') }}" class="bg-white p-6 rounded shadow space-y-4">
-            @csrf
-
-            <div>
-                <label class="block font-semibold mb-1">Date</label>
-                <input type="date" name="appointment_date" class="w-full border rounded p-2" required />
-            </div>
-
-            <div>
-                <label class="block font-semibold mb-1">Time</label>
-                <input name="appointment_time" placeholder="e.g. 11:00 AM" class="w-full border rounded p-2" required />
-            </div>
-
-            <div>
-                <label class="block font-semibold mb-1">Reason (optional)</label>
-                <input name="reason" class="w-full border rounded p-2" />
-            </div>
-
-            <div class="flex gap-2">
-                <button class="px-4 py-2 bg-blue-600 text-white rounded">Submit Request</button>
-                <a href="{{ route('health.index') }}" class="px-4 py-2 bg-gray-300 rounded">Back</a>
-            </div>
-        </form>
+        </div>
     </div>
 </x-app-layout>
