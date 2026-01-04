@@ -11,14 +11,17 @@ class ResourceRequestController extends Controller
     // 1. List Requests (Admin sees all, Faculty sees their own)
     public function index()
     {
-        $user = Auth::user();
+       $user = Auth::user();
 
-        if ($user->role === 'admin') {
-            $requests = ResourceRequest::latest()->get();
-        } elseif ($user->role === 'teacher') {
-            $requests = ResourceRequest::where('user_id', $user->id)->latest()->get();
-        } else {
-            abort(403, 'Students cannot access this page.');
+       if ($user->role === 'admin') {
+               // Admin sees all
+               $requests = ResourceRequest::latest()->get();
+        }    elseif ($user->role === 'teacher') {
+               // Teacher sees their own
+               $requests = ResourceRequest::where('user_id', $user->id)->latest()->get();
+        }  else {
+               // Students (and other roles) can view all, read-only
+               $requests = ResourceRequest::latest()->get();
         }
 
         return view('resources.index', compact('requests'));
