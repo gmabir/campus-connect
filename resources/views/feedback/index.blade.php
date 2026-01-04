@@ -2,10 +2,10 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Community Feedback') }}
+                {{ __('Faculty and Course Review') }}
             </h2>
             <a href="{{ route('feedback.create') }}" class="bg-blue-600 text-black font-bold px-4 py-2 rounded hover:text-white transition">
-                + Give Feedback
+                + Give Review
             </a>
         </div>
     </x-slot>
@@ -15,7 +15,7 @@
             
             @if($feedbacks->isEmpty())
                 <div class="text-center p-10 bg-white rounded-lg shadow">
-                    <p class="text-gray-500">No feedback submitted yet.</p>
+                    <p class="text-gray-500">No review submitted yet.</p>
                 </div>
             @endif
 

@@ -21,6 +21,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\HealthAppointmentController;
+use App\Http\Controllers\PostController;
 
 
 
@@ -112,6 +113,11 @@ Route::middleware('auth')->group(function () {
     
 
     Route::resource('gallery', App\Http\Controllers\EventPhotoController::class)->only(['index','create','store','destroy']);
+
+    // ------------------ POSTS AND COMMENTS --------------------
+    Route::get('/connect', [PostController::class, 'index'])->name('posts.index');
+    Route::post('/connect', [PostController::class, 'store'])->name('posts.store');
+    Route::post('/connect/{id}/comment', [PostController::class, 'storeComment'])->name('posts.comment');
 
 
 

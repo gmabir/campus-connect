@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Give Feedback') }}
+            {{ __('Give Review') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                     @csrf
                     
                     <div class="mb-4">
-                        <label class="block font-bold mb-2">Feedback Type</label>
+                        <label class="block font-bold mb-2">Reciew Type</label>
                         <select name="type" id="typeSelector" class="w-full border rounded px-3 py-2" onchange="toggleInputs()">
                             <option value="course">Course / Subject</option>
                             <option value="teacher">Teacher</option>
@@ -52,7 +52,7 @@
                     </div>
 
                     <button type="submit" class="bg-blue-600 text-black font-bold px-6 py-2 rounded hover:text-white">
-                        Post Feedback
+                        Post Review
                     </button>
                 </form>
 
